@@ -1,0 +1,21 @@
+name: Auto Post to Telegram
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate and post content
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CHANNEL_ID: '@claude_banana_2025'
+        run: node post.js
